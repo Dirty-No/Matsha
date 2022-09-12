@@ -1,6 +1,6 @@
 # Commands to start on workspace startup
 tasks:
-  - init: bash start_dev.sh --build
+  - init: apt update && apt-get -yqq install gettext-base
 # Ports to expose on workspace startup
 ports:
   - port: 80

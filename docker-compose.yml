@@ -1,10 +1,13 @@
 version: "3.5"
 services:
-  proxy:
+  webserver:
     build: ./
     volumes:
-    - ./templates:/etc/nginx/templates
-    - ./src:/cgi-bin
+    - ./nginx:/etc/nginx/templates
+    - ./src/cgi:/cgi-bin:rw
+    - ./src/templates:/templates:rw
     ports:
     - "80:80"
+    environment:
+      SHELL_ENV: ${SHELL_ENV:-development}
 
