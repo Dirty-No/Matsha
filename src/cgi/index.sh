@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Content-type: application/json"
+echo "Content-type: text/html"
 echo ""
-jq <<<'{}' --arg SHELL_ENV "$SHELL_ENV" --argjson PORT 80 --arg STATUS live -r '{ env: $SHELL_ENV, status: $STATUS, port: $PORT }'
+
+USER_PICTURE="/static/img/smaccary.jpg" envsubst </templates/index.html

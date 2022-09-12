@@ -6,6 +6,8 @@ services:
     - ./nginx:/etc/nginx/templates
     - ./src/cgi:/cgi-bin:rw
     - ./src/templates:/templates:rw
+    - ./src/static:/static:rw
+    - ./uploads:/uploads:rw
     ports:
     - "80:80"
     environment:
