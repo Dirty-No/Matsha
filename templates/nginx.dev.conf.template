@@ -1,0 +1,20 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        root /content;
+		autoindex on;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+
+        location / {
+            return 301 /cgi-bin/index.cgi;
+        }
+
+        location /cgi-bin/ {
+            gzip off;
+            root  /cgi-bin;
+            fastcgi_pass  unix:/var/run/fcgiwrap.socket;
+            include /etc/nginx/fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+        }
+}
