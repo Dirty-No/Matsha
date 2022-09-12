@@ -7,10 +7,8 @@ FILEPATH=/uploads/test_img
 
 cat > $FILEPATH
 
-FILENAME=$(awk <$FILEPATH -F '"' 'NR==2{print $4}')
-awk <"$FILEPATH" 'NR>5 {print last} {last=$0}' > "$FILEPATH"_done
+FILENAME="/uploads/$(awk <$FILEPATH -F '"' 'NR==2{print $4}')"
+awk <"$FILEPATH" 'NR>5 {print last} {last=$0}' > "$FILENAME"
 
 
-cat "$FILEPATH"_done
-
-# printf "%s" "$CONTENT"
+cat "$FILENAME"
