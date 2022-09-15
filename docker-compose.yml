@@ -3,13 +3,32 @@ services:
   webserver:
     build: ./
     volumes:
-    - ./nginx:/etc/nginx/templates
-    - ./src/cgi:/cgi-bin:rw
-    - ./src/templates:/templates:rw
-    - ./src/static:/static:rw
-    - ./uploads:/uploads:rw
+      - ./:/app
     ports:
-    - "80:80"
+      - "80:80"
     environment:
       SHELL_ENV: ${SHELL_ENV:-development}
-
+      PGADMIN_HOST: pgadmin
+      PGADMIN_PORT: 80
+  db:
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=matsha
+    restart: always
+    expose:
+      - 5432
+  pgadmin:
+    image: dpage/pgadmin4
+    user: root
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-smaccary@student.42.fr}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-sonic}
+    volumes:
+      - ${PGADMIN_VOLUME_PATH:-./pgadmin}:/var/lib/pgadmin:rw
+    expose:
+      - 80
+    depends_on: [db]

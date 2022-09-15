@@ -8,26 +8,28 @@ server {
 
         client_max_body_size 100M;
 
+	    resolver 127.0.0.11 ipv6=off valid=10s;
+
         location / {
             return 301 /cgi-bin/index.sh;
         }
 
         location /static/ {
-            root /;
+            root /app/src;
             try_files $uri $uri/ =404;
         }
 
         location /uploads/ {
-            root /;
+            root /app;
             try_files $uri $uri/ =404;
         }
 
         location /cgi-bin/ {
             gzip on;
-            root  /cgi-bin;
+            root  /app/src/cgi-bin;
             fastcgi_pass  unix:/var/run/fcgiwrap.socket;
             include /etc/nginx/fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+            fastcgi_param SCRIPT_FILENAME /app/src$fastcgi_script_name;
             fastcgi_param SHELL_ENV ${SHELL_ENV};
             fastcgi_request_buffering on;
             keepalive_timeout 10m;
@@ -41,4 +43,16 @@ server {
             fastcgi_send_timeout 600s;
             fastcgi_read_timeout 600s;
         }
+
+        location /pgadmin/ {
+            proxy_set_header X-Script-Name /pgadmin;
+            proxy_set_header Host $host;
+
+            set $target ${PGADMIN_HOST}:${PGADMIN_PORT};
+
+            rewrite /pgadmin/(.*) /$1 break;
+            proxy_pass http://$target/$1$is_args$args;
+
+            proxy_redirect off;
+	    }
 }
