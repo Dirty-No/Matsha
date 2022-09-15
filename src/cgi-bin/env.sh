@@ -3,4 +3,4 @@
 echo "Content-type: text/html"
 echo ""
 
-ID=$(id) ENV=$(env) BODY=$(cat) HOSTNAME=$(hostname) envsubst < ../templates/env.html
+ID=$(id) ENV=$(env) BODY=$(cat) HOSTNAME=$(hostname) envsubst < ../../templates/env.html
