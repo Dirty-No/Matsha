@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# Import SQL query function
-source ../lib/sql.sh
-source ../config/db.sh
+# Import SQL sql.query function
+source ../utils/sql.utils.sh
+source ../config/db.config.sh
 
 # Reset database when flag is set (don't set in production)
 if [ "$RESET_DB" = "true" ];then
-    query "DROP TABLE users;"
+    sql.query "DROP TABLE users;"
 fi
 
 # Init user table
-query 'CREATE TABLE IF NOT EXISTS users (
+sql.query 'CREATE TABLE IF NOT EXISTS users (
         id serial PRIMARY KEY,
         username VARCHAR ( 50 ) UNIQUE NOT NULL,
         password VARCHAR ( 50 ) NOT NULL,
@@ -21,5 +21,5 @@ query 'CREATE TABLE IF NOT EXISTS users (
 
 # Create test users
 for i in {0..10};do
-    query "INSERT INTO users (username, password, email, created_on) VALUES ('test$i', 'passtest$i', 'test$i@gmail.com', '$(date)')"
+    sql.query "INSERT INTO users (username, password, email, created_on) VALUES ('test$i', 'passtest$i', 'test$i@gmail.com', '$(date)')"
 done

@@ -3,7 +3,7 @@
 echo "Content-type: image/png"
 echo ""
 
-FILEPATH=/tmp/$(uuid)_$(date +%s)
+FILEPATH="/tmp/$(uuid)_$(date +%s)"
 
 cat > $FILEPATH
 
