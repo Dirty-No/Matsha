@@ -3,6 +3,6 @@
 echo "Content-type: application/json"
 echo ""
 
-source ../lib/users.sh
+source ../services/user.sh
 
-findAll
+UserService.findAllPublic
