@@ -8,7 +8,7 @@ sql.query() {
 
     echo SQL QUERY: "$QUERY" >&2
 
-    psql --csv --host="$POSTGRES_HOST" \
+    psql -t --host="$POSTGRES_HOST" \
         --username="$POSTGRES_USER" \
         --dbname="$POSTGRES_DB" -w -c "$QUERY"
 }
