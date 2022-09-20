@@ -20,6 +20,6 @@ sql.query 'CREATE TABLE IF NOT EXISTS users (
 );'
 
 # Create test users
-for i in {0..10};do
-    sql.query "INSERT INTO users (username, password, email, created_on) VALUES ('test$i', 'passtest$i', 'test$i@gmail.com', '$(date)')"
+for i in {1..10};do
+    sql.query "INSERT INTO users (username, password, email, created_on) VALUES ('test$i', md5('passtest$i'), 'test$i@gmail.com', '$(date)')"
 done
