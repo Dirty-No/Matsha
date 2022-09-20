@@ -13,13 +13,13 @@ UserService.findAllPublic() {
 UserService.findOne() {
     # Filter digit characters.
     ID=$(<<<"$1" tr -dc '0-9')
-    sql.query 'SELECT jsonb_agg(*) from users where id = '"$ID"
+    sql.query 'SELECT jsonb_agg(users) from users where id = '"$ID"
 }
 
 UserService.findOnePublic() {
     # Filter digit characters.
     ID=$(<<<"$1" tr -dc '0-9')
-    sql.query 'SELECT jsonb_agg(user_pub) from (SELECT id, username, email, created_on from users where id = '"$ID) as user_pub"
+    sql.query 'SELECT jsonb_agg(user_pub)->0 from (SELECT id, username, email, created_on from users where id = '"$ID) as user_pub"
 }
 
 UserService.create() {
